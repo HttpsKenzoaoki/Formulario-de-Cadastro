@@ -1,7 +1,6 @@
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.*;
-
 public class Cadastro_Cliente extends JFrame {
     private JComboBox<String> TipoJComboBox;
     private JTextField digiteSeuCPFOuTextField;
