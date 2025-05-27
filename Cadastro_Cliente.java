@@ -1,7 +1,10 @@
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.*;
+
 public class Cadastro_Cliente extends JFrame {
+
+    //! Definindo cada elemento
     private JComboBox<String> TipoJComboBox;
     private JTextField digiteSeuCPFOuTextField;
     private JCheckBox FornecedorCheck;
@@ -25,9 +28,47 @@ public class Cadastro_Cliente extends JFrame {
     private JLabel cadastroLabel, tipoLabel, cpfLabel, fornecedorLabel, nomeLabel,
             rgLabel, expeditorLabel, emailLabel, cepLabel, paisLabel,
             ufLabel, municipioLabel, logradouroLabel, numeroLabel,
-            complementoLabel, bairroLabel, telefoneLabel, situacaoLabel;
+            complementoLabel, bairroLabel, telefoneLabel, situacaoLabel, senhaLabel, confirmarsenhaLabel;
     private JTextField CEPField;
     private JPanel painel;
+    private JPasswordField senhaField;
+    private JPasswordField confirmarsenhaField;
+
+    private void limparCampos() { //! Limpa todos os campos, colocando valores null em Campos String e false em Campos de selecionar, além de retornar a origem em campos de JComboBox
+        TipoJComboBox.setSelectedIndex(0);
+        digiteSeuCPFOuTextField.setText(null);
+        FornecedorCheck.setSelected(false);
+        NomeField.setText(null);
+        RGField.setText(null);
+        ExpeditorField.setText(null);
+        EmailField.setText(null);
+        PaisComboBox.setSelectedIndex(0);
+        UFField.setText(null);
+        MunicipioCombobox.setSelectedIndex(0);
+        LogradouroField.setText(null);
+        NumeroField.setText(null);
+        ComplementoField.setText(null);
+        BairroField.setText(null);
+        TelefoneField.setText(null);
+        AtivoRadioButton.setSelected(false); InativoRadioButton.setSelected(false);
+        senhaField.setText(null);
+        confirmarsenhaField.setText(null);
+    }
+
+    private void SairPrograma(){ //! A função mostra uma janela, se a pessoa confirmar o programa fecha, se ela não concordar o programa continua ativo
+        int resposta = JOptionPane.showConfirmDialog(
+                this,
+                "Deseja Sair Do Programa?",
+                "Confirmação",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
+        );
+
+        if (resposta == JOptionPane.YES_OPTION) {
+            JOptionPane.showMessageDialog(this, "Saindo...");
+            System.exit(0);
+        }
+    }
 
     public Cadastro_Cliente() {
         super("Cadastro de Pessoa");
@@ -38,10 +79,11 @@ public class Cadastro_Cliente extends JFrame {
         painel = new JPanel();
         painel.setLayout(null);
 
+        //! Definindo Coordenadas e Tamanhos
         cadastroLabel = new JLabel("Cadastro de Pessoa");
-        cadastroLabel.setBounds(20, 5, 400, 30);
-        cadastroLabel.setFont(new Font("SansSerif", Font.PLAIN, 30));
-        cadastroLabel.setForeground(new Color(250, 167, 1));
+        cadastroLabel.setBounds(20, 10, 400, 30);
+        cadastroLabel.setFont(new Font("SansSerif", Font.PLAIN, 30)); //! Decidi colocar uma fonte diferente e aumentar o tamanho do titulo
+        cadastroLabel.setForeground(new Color(250, 167, 1)); //! Coloquei tambem a cor da foto de exemplo, no caso, laranja
 
         tipoLabel = new JLabel("Tipo");
         tipoLabel.setBounds(20, 50, 100, 20);
@@ -133,17 +175,29 @@ public class Cadastro_Cliente extends JFrame {
         situacaoGroup.add(AtivoRadioButton);
         situacaoGroup.add(InativoRadioButton);
 
-        ConfirmarButton = new JButton("Confirmar");
-        ConfirmarButton.setBounds(20, 420, 100, 30);
-        ConfirmarButton.setBackground(new Color(250, 167, 1));
+        senhaLabel = new JLabel("Senha");
+        senhaLabel.setBounds(20, 410, 100, 20);
+        senhaField = new JPasswordField();
+        senhaField.setBounds(120,410, 525, 25);
 
+        confirmarsenhaLabel = new JLabel("Confirmar Senha");
+        confirmarsenhaLabel.setBounds(20, 450,100, 20);
+        confirmarsenhaField = new JPasswordField();
+        confirmarsenhaField.setBounds(130, 450, 525, 25);
+
+    //! Quis deixar fiel a imagem de exemplo até mesmo na cor, coloquei os dois botões na cor laranja
+        ConfirmarButton = new JButton("Confirmar");
+        ConfirmarButton.setBounds(20, 490, 100, 30);
+        ConfirmarButton.setBackground(new Color(250, 167, 1)); 
+        
         ExcluirButton = new JButton("Excluir");
-        ExcluirButton.setBounds(130, 420, 100, 30);
+        ExcluirButton.setBounds(130, 490, 100, 30);
         ExcluirButton.setBackground(new Color(250, 167, 1));
 
         LimparButton = new JButton("Limpar");
-        LimparButton.setBounds(240, 420, 100, 30);
+        LimparButton.setBounds(240, 490, 100, 30);
 
+        //! Adicionando ao painel
         painel.add(cadastroLabel);
         painel.add(tipoLabel); painel.add(TipoJComboBox);
         painel.add(cpfLabel); painel.add(digiteSeuCPFOuTextField);
@@ -162,13 +216,25 @@ public class Cadastro_Cliente extends JFrame {
         painel.add(bairroLabel); painel.add(BairroField);
         painel.add(telefoneLabel); painel.add(TelefoneField);
         painel.add(situacaoLabel); painel.add(AtivoRadioButton); painel.add(InativoRadioButton);
+        painel.add(senhaLabel); painel.add(senhaField);
+        painel.add(confirmarsenhaLabel); painel.add(confirmarsenhaField);
         painel.add(ConfirmarButton); painel.add(ExcluirButton); painel.add(LimparButton);
+
+        //! Colocando Ações nos botões
+        ConfirmarButton.addActionListener(e -> { //! Mostra uma mensagem de cadastrado e limpa o campo
+            JOptionPane.showMessageDialog(this, "Usuario Cadastrado Com Sucesso!!");
+            System.out.print("Usuario Cadastrado com Sucesso!! \n");
+            limparCampos();
+        });
+        LimparButton.addActionListener(e -> limparCampos()); //! Limpa o campo com uma função
+        ExcluirButton.addActionListener(actionEvent -> SairPrograma()); //! Aciona a função para sair do programa
 
         this.setContentPane(painel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(760, 520);
+        this.setSize(760, 570);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+
     }
 
     public static void main(String[] args) {
