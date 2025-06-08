@@ -70,6 +70,96 @@ public class Cadastro_Cliente extends JFrame {
         }
     }
 
+    private void Salvar(){
+    String senha = new String(senhaField.getPassword());
+    String confirmarSenha = new String(confirmarsenhaField.getPassword());
+
+    if(digiteSeuCPFOuTextField.getText().trim().isEmpty()){
+        JOptionPane.showMessageDialog(this, "O campo Cpf/Cnpj é obrigatorio");
+        return;
+    }
+
+    if (NomeField.getText().trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "O campo Nome é obrigatório.");
+        return;
+    }
+
+    if (RGField.getText().trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "O campo RG é obrigatório.");
+        return;
+    }
+
+    if (ExpeditorField.getText().trim().isEmpty()){
+        JOptionPane.showMessageDialog(this, "O campo de Orgão Expeditor é obrigatorio");
+        return;
+    }
+
+    if(EmailField.getText().trim().isEmpty()){
+        JOptionPane.showMessageDialog(this, "O campo de email é obrigatorio");
+        return;
+    }
+
+    if(CEPField.getText().trim().isEmpty()){
+        JOptionPane.showMessageDialog(this, "O campo de CEP é obrigatorio");
+        return;
+    }
+
+    if(UFField.getText().trim().isEmpty()){
+        JOptionPane.showMessageDialog(this, "O campo UF é obrigatorio");
+        return;
+    }
+
+    if(LogradouroField.getText().trim().isEmpty()){
+        JOptionPane.showMessageDialog(this, "O campo Logradouro é Obrigatorio");
+        return;
+    }
+
+    if(NumeroField.getText().trim().isEmpty()){
+        JOptionPane.showMessageDialog(this, "O campo Numero é Obrigatorio");
+        return;
+    }
+
+    if(BairroField.getText().trim().isEmpty()){
+        JOptionPane.showMessageDialog(this, "O campo Bairro é Obrigatorio");
+        return;
+    }
+
+    if (TelefoneField.getText().trim().isEmpty()){
+        JOptionPane.showMessageDialog(this, "O campo Telefone é Obrigatorio");
+        return;
+    }
+
+    if (senha.isEmpty() || confirmarSenha.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Os campos de senha são obrigatórios.");
+        return;
+    }
+
+    if (!senha.equals(confirmarSenha)) {
+        JOptionPane.showMessageDialog(this, "As senhas não coincidem.");
+        return;
+    }
+    else{
+        int resposta2 = JOptionPane.showConfirmDialog(
+                this,
+                "Deseja Cadastrar o usuario?",
+                "Confirmação",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
+        );
+
+        if (resposta2 == JOptionPane.YES_OPTION) {
+            JOptionPane.showMessageDialog(this, "Usuario Cadastrado Com Sucesso!!");
+            System.out.print("Usuario Cadastrado com Sucesso!! \n");
+            limparCampos();  
+        }
+
+        else{
+            JOptionPane.showMessageDialog(this, "Usuario não foi Cadastrado");
+        }
+           
+    }
+    }
+
     public Cadastro_Cliente() {
         super("Cadastro de Pessoa");
         inicialization();
@@ -221,11 +311,7 @@ public class Cadastro_Cliente extends JFrame {
         painel.add(ConfirmarButton); painel.add(ExcluirButton); painel.add(LimparButton);
 
         //! Colocando Ações nos botões
-        ConfirmarButton.addActionListener(e -> { //! Mostra uma mensagem de cadastrado e limpa o campo
-            JOptionPane.showMessageDialog(this, "Usuario Cadastrado Com Sucesso!!");
-            System.out.print("Usuario Cadastrado com Sucesso!! \n");
-            limparCampos();
-        });
+        ConfirmarButton.addActionListener(e -> Salvar()); //! Cadastra o Usuario
         LimparButton.addActionListener(e -> limparCampos()); //! Limpa o campo com uma função
         ExcluirButton.addActionListener(actionEvent -> SairPrograma()); //! Aciona a função para sair do programa
 
@@ -241,3 +327,4 @@ public class Cadastro_Cliente extends JFrame {
         new Cadastro_Cliente();
     }
 }
+             //! FEITO POR WILIAM KENZO AOKI DA SILVA 2-DS(AMS) 
