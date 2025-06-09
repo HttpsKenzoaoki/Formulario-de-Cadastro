@@ -33,6 +33,7 @@ public class Cadastro_Cliente extends JFrame {
     private JPanel painel;
     private JPasswordField senhaField;
     private JPasswordField confirmarsenhaField;
+    int resposta, resposta2, resposta3;
 
     private void limparCampos() { //! Limpa todos os campos, colocando valores null em Campos String e false em Campos de selecionar, além de retornar a origem em campos de JComboBox
         TipoJComboBox.setSelectedIndex(0);
@@ -56,7 +57,7 @@ public class Cadastro_Cliente extends JFrame {
     }
 
     private void SairPrograma(){ //! A função mostra uma janela, se a pessoa confirmar o programa fecha, se ela não concordar o programa continua ativo
-        int resposta = JOptionPane.showConfirmDialog(
+        resposta = JOptionPane.showConfirmDialog(
                 this,
                 "Deseja Sair Do Programa?",
                 "Confirmação",
@@ -137,9 +138,10 @@ public class Cadastro_Cliente extends JFrame {
     if (!senha.equals(confirmarSenha)) {
         JOptionPane.showMessageDialog(this, "As senhas não coincidem.");
         return;
-    }
+    } 
+
     else{
-        int resposta2 = JOptionPane.showConfirmDialog(
+        resposta2 = JOptionPane.showConfirmDialog(
                 this,
                 "Deseja Cadastrar o usuario?",
                 "Confirmação",
@@ -150,11 +152,21 @@ public class Cadastro_Cliente extends JFrame {
         if (resposta2 == JOptionPane.YES_OPTION) {
             JOptionPane.showMessageDialog(this, "Usuario Cadastrado Com Sucesso!!");
             System.out.print("Usuario Cadastrado com Sucesso!! \n");
-            limparCampos();  
+            
+            resposta3 = JOptionPane.showConfirmDialog(
+            this, 
+            "Deseja apagar os campos?", 
+            "Confirmação", 
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.WARNING_MESSAGE);
         }
-
+        
         else{
             JOptionPane.showMessageDialog(this, "Usuario não foi Cadastrado");
+        }
+
+        if(resposta3 == JOptionPane.YES_OPTION){
+            limparCampos();
         }
            
     }
